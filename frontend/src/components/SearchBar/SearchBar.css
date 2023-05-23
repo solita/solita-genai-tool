@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.messagecontainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 800px;
+  margin: 0 0 1rem;
+  flex-direction: column-reverse;
+}
+
+.message {
+  display: flex;
+  max-width: 1000px;
+  margin: 0.5rem;
+  flex-direction: column;
+}
+
+.question {
+  padding: 0rem 1rem 1rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.answer {
+  background-color: #f7f7f8;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.select {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#templatelabel {
+  margin: 0.5rem 0 0 1rem;
+}
+
+.react-aria-Input {
+  margin: 0.5rem;
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-radius: 0.375rem;
+  border-color: rgba(0,0,0,.1);
+  min-width: 40rem;
+  box-shadow: 0px 0px 10px rgba(0 0 0 / 0.1);
+  border-width: 1px;
+}
+
+.react-aria-Input:focus {
+  outline: none !important;
+  border-color: #282828;
+}
+
+.react-aria-Label {
+  margin: 0.5rem;
+}
+
+.react-aria-Button {
+  border: 0;
+  background-color: transparent;
+  opacity: 0.9;
+  margin: 0.2rem 0 0 0;
+}
+
+.react-aria-Button .disabled {
+  border: 0;
+  background-color: transparent;
+  opacity: 0.5;
+}
+
+

@@ -1,0 +1,156 @@
+.react-aria-Select {
+  padding-bottom: 0.2rem;
+  
+  .react-aria-Button {
+    color: #282828;
+    border: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0px 0px 10px rgba(0 0 0 / 0.1);
+    border-radius: 0.375rem;
+    appearance: none;
+    vertical-align: middle;
+    padding: 0.286rem 0.286rem 0.286rem 0.571rem;
+    margin: 0.80rem 1rem 1rem 1rem;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 250px;
+
+    &[data-focus-visible] {
+      border-color: #3d3d3d;
+    }
+
+    &:disabled {
+      border-color: var(--border-color-disabled);
+      color: var(--text-color-disabled);
+      & span[aria-hidden] {
+        background: var(--border-color-disabled);
+      }
+    }
+  }
+
+  .react-aria-SelectValue {
+    &[data-placeholder] {
+      color: #282828;
+    }
+  }
+
+  & span[aria-hidden] {
+    width: 1.5rem;
+    line-height: 1.375rem;
+    margin-left: 1rem;
+    padding: 1px;
+    background: transparent;
+    color: var(--solita-grey);
+    border-radius: 0.375rem;
+  }
+
+  [slot=description] {
+    font-size: 12px;
+  }
+
+  [slot=errorMessage] {
+    font-size: 12px;
+    color: var(--spectrum-global-color-red-600);
+  }
+}
+
+.react-aria-ListBox {
+  --highlight-background: #dc1e32;
+  --highlight-foreground: white;
+  --text-color: var(--spectrum-alias-text-color);
+  --text-color-disabled: var(--spectrum-alias-text-color-disabled);
+
+  max-height: inherit;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 2px;
+  outline: none;
+
+  .react-aria-Section:not(:first-child) {
+    margin-top: 12px;
+  }
+
+  .react-aria-Item {
+    margin: 2px;
+    padding: 0.286rem 0.571rem 0.286rem 1.571rem;
+    border-radius: 0.375rem;
+    outline: none;
+    cursor: default;
+    color: var(--text-color);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &[aria-selected=true] {
+      font-weight: 600;
+
+      &::before {
+        content: '✓';
+        content: '✓' / '';
+        alt: ' ';
+        position: absolute;
+        top: 4px;
+        left: 10px;
+      }
+    }
+
+    &[data-focused],
+    &[data-pressed] {
+      background: var(--highlight-background);
+      color: var(--highlight-foreground);
+    }
+
+    &[aria-disabled] {
+      color: var(--text-color-disabled);
+    }
+
+    [slot=label] {
+      font-weight: bold;
+    }
+
+    [slot=description] {
+      font-size: small;
+    }
+  }
+}
+
+.react-aria-Popover {
+  border-color: rgba(0,0,0,.1);
+  min-width: var(--trigger-width);
+  max-width: 250px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px rgba(0 0 0 / 0.1);
+  border-radius: 0.375rem;
+  background: #fff;
+  outline: none;
+
+  &[data-placement=top] {
+    --origin: translateY(8px);
+  }
+
+  &[data-placement=bottom] {
+    --origin: translateY(-8px);
+  }
+
+  &[data-entering] {
+    animation: slide 200ms;
+  }
+
+  &[data-exiting] {
+    animation: slide 200ms reverse ease-in;
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: var(--origin);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
