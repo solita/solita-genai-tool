@@ -5,5 +5,5 @@ export const chatRouter = Router()
 
 chatRouter.post('/', async (req, res) => {
   const message = await sendChatMessage(req.body.message)
-  res.json(message)
+  res.json({message})
 })
