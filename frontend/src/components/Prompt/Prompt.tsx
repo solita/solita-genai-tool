@@ -3,6 +3,7 @@ import { TextField, Label, Input, Button } from 'react-aria-components'
 import TemplateSelector from '../TemplateSelector/TemplateSelector'
 import ChatFeed from '../ChatFeed/ChatFeed'
 import './Prompt.css'
+import Spinner from '../Spinner/Spinner'
 
 type Conversation = {
   question: string
@@ -45,6 +46,13 @@ function Prompt() {
   return (
     <div>
       <ChatFeed conversation={conversation} />
+      {loading ? (
+        <div className="container">
+          <Spinner />
+        </div>
+      ) : (
+        ''
+      )}
       <form onSubmit={handleSubmit}>
         <div className="container">
           <div className="item select">

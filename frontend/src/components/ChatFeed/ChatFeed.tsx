@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown'
 import './ChatFeed.css'
 
 type ConversationProps = {
@@ -23,7 +24,7 @@ function ChatFeed({ conversation }: ConversationProps) {
                     <span className="bold">Q:</span> {conversationPart.question}
                   </div>
                   <div className="answer">
-                    <span className="bold">A:</span> {conversationPart.answer}
+                    <span className="bold">A:</span> <ReactMarkdown children={conversationPart.answer} />
                   </div>
                 </div>
               ))
