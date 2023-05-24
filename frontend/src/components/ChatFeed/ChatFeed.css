@@ -1,0 +1,26 @@
+.message-container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 800px;
+  margin: 0 0 1rem;
+  flex-direction: column-reverse;
+}
+
+.message {
+  display: flex;
+  max-width: 1000px;
+  margin: 0.5rem;
+  flex-direction: column;
+}
+
+.question {
+  padding: 0rem 1rem 1rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.answer {
+  background-color: #f7f7f8;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}

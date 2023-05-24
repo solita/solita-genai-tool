@@ -4,8 +4,8 @@ import './TemplateSelector.css'
 function TemplateSelector() {
   return (
     <>
-      <label id="templatelabel">Select a template</label>
-      <Select aria-labelledby="templatelabel">
+      <label id="label">Select a template</label>
+      <Select aria-labelledby="label">
         <Button>
           <SelectValue />
           <span aria-hidden="true">⮟</span>

@@ -1,55 +1,50 @@
 import { FormEvent, useState } from 'react'
 import { TextField, Label, Input, Button } from 'react-aria-components'
 import TemplateSelector from '../TemplateSelector/TemplateSelector'
-import './SearchBar.css'
+import ChatFeed from '../ChatFeed/ChatFeed'
+import './Prompt.css'
 
-function SearchBar() {
+type Conversation = {
+  question: string
+  answer: string
+}
+
+function Prompt() {
   const [inputValue, setInputValue] = useState<string>('')
-  const [questionsAndAnswers, setQuestionAndAnswers] = useState<any[]>([])
+  const [conversation, setConversation] = useState<Conversation[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-
     const data = { message: inputValue }
 
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3000/chat', {
+
+      const response = await fetch(import.meta.env.VITE_BACKEND_URL + '/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       })
+
       const result = await response.json()
-      setQuestionAndAnswers((oldArray) => [...oldArray, { question: inputValue, answer: result.message }])
+
+      setConversation((oldArray) => [...oldArray, { question: inputValue, answer: result.message }])
       setLoading(false)
+      setError(false)
       setInputValue('')
     } catch (error) {
       console.error(error)
+      setError(true)
     }
   }
 
   return (
     <div>
-      <div className="messagecontainer">
-        {questionsAndAnswers
-          ? questionsAndAnswers
-              .slice(0)
-              .reverse()
-              .map((questionAndAnswer) => (
-                <div className="message">
-                  <div className="question">
-                    <span className="bold">Q:</span> {questionAndAnswer.question}
-                  </div>
-                  <div className="answer">
-                    <span className="bold">A:</span> {questionAndAnswer.answer}
-                  </div>
-                </div>
-              ))
-          : 'Loading'}
-      </div>
+      <ChatFeed conversation={conversation} />
       <form onSubmit={handleSubmit}>
         <div className="container">
           <div className="item select">
@@ -59,7 +54,7 @@ function SearchBar() {
             <TextField>
               <Label>Prompt</Label>
               <div className="item">
-                <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} required={true} />
                 <div className="item">
                   <Button type="submit" isDisabled={inputValue.length > 0 ? false : true}>
                     <svg
@@ -87,4 +82,4 @@ function SearchBar() {
   )
 }
 
-export default SearchBar
+export default Prompt

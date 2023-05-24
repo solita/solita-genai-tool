@@ -1,3 +1,19 @@
+#label {
+  margin: 0.5rem 0 0 1rem;
+}
+
+@media (max-width: 1250px) {
+  #label {
+    margin: 0 0 0 0.5rem;
+  }
+}
+
+@media (max-width: 1250px) {
+  .react-aria-Select {
+    padding-top: 0.30rem;
+  }
+}
+
 .react-aria-Select {
   padding-bottom: 0.2rem;
   

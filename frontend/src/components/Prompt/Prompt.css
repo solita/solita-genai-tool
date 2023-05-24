@@ -3,36 +3,15 @@
   justify-content: center;
 }
 
+@media (max-width: 1250px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
 .item {
   display: flex;
   align-items: center;
-}
-
-.messagecontainer {
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  max-height: 800px;
-  margin: 0 0 1rem;
-  flex-direction: column-reverse;
-}
-
-.message {
-  display: flex;
-  max-width: 1000px;
-  margin: 0.5rem;
-  flex-direction: column;
-}
-
-.question {
-  padding: 0rem 1rem 1rem 1rem;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.answer {
-  background-color: #f7f7f8;
-  padding: 1rem;
-  border-bottom: 1px solid #e5e5e5;
 }
 
 .bold {
@@ -44,10 +23,6 @@
   align-items: flex-start;
 }
 
-#templatelabel {
-  margin: 0.5rem 0 0 1rem;
-}
-
 .react-aria-Input {
   margin: 0.5rem;
   padding: 0.75rem 0 0.75rem 1rem;
@@ -56,6 +31,18 @@
   min-width: 40rem;
   box-shadow: 0px 0px 10px rgba(0 0 0 / 0.1);
   border-width: 1px;
+}
+
+@media (max-width: 720px) {
+  .react-aria-Input {
+    min-width: 25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .react-aria-Input {
+    min-width: 18rem;
+  }
 }
 
 .react-aria-Input:focus {
