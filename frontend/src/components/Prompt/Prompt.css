@@ -6,6 +6,7 @@
 @media (max-width: 1250px) {
   .container {
     flex-direction: column;
+    align-items: center;
   }
 }
 

@@ -17,8 +17,8 @@ function ChatFeed({ conversation }: ConversationProps) {
           ? conversation
               .slice(0)
               .reverse()
-              .map((conversationPart) => (
-                <div className="message">
+              .map((conversationPart, i) => (
+                <div className="message" key={i}>
                   <div className="question">
                     <span className="bold">Q:</span> {conversationPart.question}
                   </div>
