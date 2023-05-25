@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import './ChatFeed.css'
+import { CodeViewer } from '../CodeViewer'
 
 type ConversationProps = {
   conversation: Conversation[]
@@ -24,7 +25,16 @@ function ChatFeed({ conversation }: ConversationProps) {
                     <span className="bold">Q:</span> {conversationPart.question}
                   </div>
                   <div className="answer">
-                    <span className="bold">A:</span> <ReactMarkdown children={conversationPart.answer} />
+                    <span className="bold">A:</span>
+                    <ReactMarkdown
+                      children={conversationPart.answer}
+                      components={{
+                        code: ({ inline, children, className }) => {
+                          const match = /language-(\w+)/.exec(className || '')
+                          return !inline ? <CodeViewer language={match?.[1]}>{String(children)}</CodeViewer> : <code>{children}</code>
+                        },
+                      }}
+                    />
                   </div>
                 </div>
               ))

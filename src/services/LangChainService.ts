@@ -1,5 +1,5 @@
 import { ChatOpenAI } from 'langchain/chat_models/openai'
-import { HumanChatMessage } from 'langchain/schema'
+import { HumanChatMessage, SystemChatMessage } from 'langchain/schema'
 
 const chat = new ChatOpenAI({
   azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
@@ -9,8 +9,13 @@ const chat = new ChatOpenAI({
   temperature: 0.9,
 })
 
-export const sendChatMessage = async (content: string) => {
+export const sendChatMessage = async (content: string, systemMessage?: string) => {
   const message = new HumanChatMessage(content)
-  const data = await chat.call([message])
+  const SolitaGenAI = new SystemChatMessage('Your name is Solita GenAI')
+  // include system message if provided
+  const callMessages = systemMessage
+    ? [SolitaGenAI, new SystemChatMessage(systemMessage), message]
+    : [SolitaGenAI, message]
+  const data = await chat.call(callMessages)
   return data.text
 }
