@@ -1,0 +1,201 @@
+#!/usr/bin/env node
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var commander_1 = require("commander");
+var dotenv = require("dotenv");
+var openai_1 = require("langchain/chat_models/openai");
+var schema_1 = require("langchain/schema");
+var readline_1 = require("readline");
+var rl = (0, readline_1.createInterface)({
+    input: process.stdin,
+    output: process.stdout,
+});
+var prompt = function (question) {
+    return new Promise(function (resolve) {
+        rl.question(question, function (answer) {
+            resolve(answer);
+        });
+    });
+};
+dotenv.config();
+console.log("Using deployment ".concat(process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME));
+var chat = new openai_1.ChatOpenAI({
+    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
+    azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_API_INSTANCE_NAME,
+    azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
+    azureOpenAIApiVersion: process.env.AZURE_OPENAI_API_VERSION,
+    temperature: 0.9,
+});
+// function to save string to file
+function saveStringToFile(stringToSave, fileName) {
+    var fs = require('fs');
+    fs.writeFileSync(fileName, stringToSave, function (err) {
+        if (err)
+            return console.log(err);
+        console.log("Saved ".concat(fileName));
+    });
+}
+var sendChat = function (messages) { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, chat.call(messages)];
+            case 1:
+                data = _a.sent();
+                return [2 /*return*/, data.text];
+        }
+    });
+}); };
+var sendChatMessage = function (content) { return __awaiter(void 0, void 0, void 0, function () {
+    var message;
+    return __generator(this, function (_a) {
+        message = new schema_1.HumanChatMessage(content);
+        return [2 /*return*/, sendChat([message])];
+    });
+}); };
+var sendChatMessages = function (content) { return __awaiter(void 0, void 0, void 0, function () {
+    var messages;
+    return __generator(this, function (_a) {
+        messages = content.map(function (message) { return new schema_1.HumanChatMessage(message); });
+        return [2 /*return*/, sendChat(messages)];
+    });
+}); };
+function usage() {
+    console.log('Usage: cli [options]');
+    console.log('Options:');
+    console.log('  -m, --message <message>          Generic message to the chatbot. Cant be used with -s');
+    console.log('  -c, --chat                       Start a chat with the LangChain service. Cant be used with -m');
+    console.log('  -s, --save <filename_prefix>     Save chat response components to file, with filename prefix. Files will be saved as <filename_prefix>.<round>.<index>.txt|<detected extension>');
+}
+var languges = {
+    ts: 'typescript',
+    sh: 'bash',
+    py: 'python',
+    js: 'javascript',
+    html: 'html',
+    c: 'c',
+    cpp: 'cpp',
+    java: 'java',
+    cs: 'csharp',
+};
+function getKeyByValue(value) {
+    return Object.keys(languges).find(function (key) { return languges[key] === value; });
+}
+function saveCodeBlocks(response, prefix, round) {
+    var codeBlocks = response.split(/```([\w-]+)?\n/);
+    var nextExt = undefined;
+    var counter = 0;
+    for (var _i = 0, codeBlocks_1 = codeBlocks; _i < codeBlocks_1.length; _i++) {
+        var block = codeBlocks_1[_i];
+        if (block !== undefined) {
+            var ext = getKeyByValue(block);
+            if (ext !== undefined) {
+                nextExt = ext;
+            }
+            else {
+                if (nextExt !== undefined) {
+                    saveStringToFile(block, "".concat(prefix, ".").concat(round, ".").concat(counter, ".").concat(nextExt));
+                    nextExt = undefined;
+                }
+                else {
+                    saveStringToFile(block, "".concat(prefix, ".").concat(round, ".").concat(counter, ".txt"));
+                }
+                counter++;
+            }
+        }
+    }
+    return counter;
+}
+var program = new commander_1.Command();
+program
+    .option('-m, --message <message>')
+    .option('-s, --save <filename_prefix>')
+    .option('-c, --chat')
+    .action(function (options) { return __awaiter(void 0, void 0, void 0, function () {
+    var prompts, chatcounter, input, response, counter, response;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!options.chat) return [3 /*break*/, 5];
+                console.log('Starting chat, write "exit" to end ...');
+                prompts = [];
+                chatcounter = 0;
+                _a.label = 1;
+            case 1:
+                if (!true) return [3 /*break*/, 4];
+                return [4 /*yield*/, prompt('You: ')];
+            case 2:
+                input = _a.sent();
+                if (input === 'exit') {
+                    console.log('Exiting chat...');
+                    process.exit(1);
+                }
+                prompts.push(input);
+                return [4 /*yield*/, sendChatMessages(prompts)];
+            case 3:
+                response = _a.sent();
+                if (options.save) {
+                    counter = saveCodeBlocks(response, options.save, chatcounter);
+                    console.log("Saved ".concat(counter, " blocks"));
+                    chatcounter++;
+                }
+                console.log("Chatbot: ".concat(response));
+                return [3 /*break*/, 1];
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                // if message is not provided, exit with error
+                if (!options.message) {
+                    console.log('Error: message is required if not entering chat mode!');
+                    usage();
+                    process.exit(1);
+                }
+                console.log("Sending, ".concat(options.message, "!"));
+                response = sendChatMessage(options.message).then(function (response) {
+                    if (options.save) {
+                        var counter = saveCodeBlocks(response, options.save, 0);
+                        console.log("Saved ".concat(counter, " code blocks"));
+                    }
+                    console.log(response);
+                });
+                _a.label = 6;
+            case 6: return [2 /*return*/];
+        }
+    });
+}); });
+program.parse(process.argv);

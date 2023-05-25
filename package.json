@@ -6,13 +6,16 @@
   "description": "Solita GenAI Tool",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r tsconfig-paths/register ./src/index.ts"
+    "start": "nodemon -r tsconfig-paths/register ./src/index.ts",
+    "build-cli": "npx tsc cli.ts; echo \"#!/usr/bin/env node\" > cli; cat cli.js >> cli; chmod +x cli; rm cli.js;"
   },
   "dependencies": {
+    "commander": "^10.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "langchain": "^0.0.78"
+    "langchain": "^0.0.78",
+    "openai": "^3.2.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
