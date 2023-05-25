@@ -148,7 +148,7 @@ program
     .option('-s, --save <filename_prefix>')
     .option('-c, --chat')
     .action(function (options) { return __awaiter(void 0, void 0, void 0, function () {
-    var prompts, chatcounter, input, response, counter, response;
+    var prompts, chatcounter, input, response, counter, response, counter;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -177,7 +177,7 @@ program
                 }
                 console.log("Chatbot: ".concat(response));
                 return [3 /*break*/, 1];
-            case 4: return [3 /*break*/, 6];
+            case 4: return [3 /*break*/, 7];
             case 5:
                 // if message is not provided, exit with error
                 if (!options.message) {
@@ -186,15 +186,19 @@ program
                     process.exit(1);
                 }
                 console.log("Sending, ".concat(options.message, "!"));
-                response = sendChatMessage(options.message).then(function (response) {
-                    if (options.save) {
-                        var counter = saveCodeBlocks(response, options.save, 0);
-                        console.log("Saved ".concat(counter, " code blocks"));
-                    }
-                    console.log(response);
-                });
-                _a.label = 6;
-            case 6: return [2 /*return*/];
+                return [4 /*yield*/, sendChatMessage(options.message)];
+            case 6:
+                response = _a.sent();
+                if (options.save) {
+                    counter = saveCodeBlocks(response, options.save, 0);
+                    console.log("Saved ".concat(counter, " code blocks"));
+                }
+                console.log(response);
+                _a.label = 7;
+            case 7:
+                // for some reason, return or prommise.resolve() does not work here, so we exit manually
+                process.exit(0);
+                return [2 /*return*/];
         }
     });
 }); });

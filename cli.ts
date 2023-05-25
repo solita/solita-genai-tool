@@ -2,7 +2,9 @@ import { Command } from 'commander';
 import * as dotenv from 'dotenv'
 import { ChatOpenAI } from 'langchain/chat_models/openai'
 import { HumanChatMessage } from 'langchain/schema'
+import { exit } from 'process';
 import { createInterface } from 'readline';
+import { promiseHooks } from 'v8';
 
 const rl = createInterface({
   input: process.stdin,
@@ -141,14 +143,15 @@ program
         process.exit(1);
       }
       console.log(`Sending, ${options.message}!`);
-      const response = sendChatMessage(options.message).then((response) => {
-        if (options.save) {
-          const counter = saveCodeBlocks(response, options.save, 0);
-          console.log(`Saved ${counter} code blocks`);
-        }
-        console.log(response);
-      });
+      const response = await sendChatMessage(options.message);
+      if (options.save) {
+        const counter = saveCodeBlocks(response, options.save, 0);
+        console.log(`Saved ${counter} code blocks`);
+      }
+      console.log(response);
     }
+    // for some reason, return or prommise.resolve() does not work here, so we exit manually
+    process.exit(0);
   });
 
 program.parse(process.argv);
