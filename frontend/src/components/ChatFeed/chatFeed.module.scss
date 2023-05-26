@@ -1,10 +1,11 @@
-.message-container {
+.container {
   display: flex;
   flex-direction: column;
   overflow: auto;
   max-height: 800px;
   margin: 0 0 1rem;
   flex-direction: column-reverse;
+  min-width: 380px;
 }
 
 .message {
@@ -16,11 +17,22 @@
 
 .question {
   padding: 0rem 1rem 1rem 1rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .answer {
   background-color: #f7f7f8;
   padding: 1rem;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .question {
+    color: white;
+    border-bottom: 1px solid #6e6e6e;
+  }
+  .answer {
+    background-color: #282828;
+    border-bottom: 1px solid #6e6e6e;
+  }
 }
