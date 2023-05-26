@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   padding: 0 0 1rem;
+  min-width: 380px;
 }
 
 @media (max-width: 1250px) {
@@ -14,10 +15,6 @@
 .item {
   display: flex;
   align-items: center;
-}
-
-.bold {
-  font-weight: 500;
 }
 
 .select {
@@ -68,5 +65,3 @@
   background-color: transparent;
   opacity: 0.5;
 }
-
-

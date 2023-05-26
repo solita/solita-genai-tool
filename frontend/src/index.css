@@ -32,6 +32,10 @@ h1 {
   line-height: 1.1;
 }
 
+.text-bold {
+  font-weight: 500;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -41,19 +45,19 @@ h1 {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #fff;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #fff;
+    background-color: #111;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #213547;
+    background-color: #3d3d3d;
   }
 }

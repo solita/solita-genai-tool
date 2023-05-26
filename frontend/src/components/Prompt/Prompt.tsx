@@ -1,4 +1,4 @@
-import './Prompt.css'
+import styles from './prompt.module.scss'
 import { useState } from 'react'
 import ChatFeed from '../ChatFeed/ChatFeed'
 import Spinner from '../Spinner/Spinner'
@@ -13,7 +13,7 @@ type Conversation = {
 function Prompt() {
   const [conversation, setConversation] = useState<Conversation[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<boolean>(false)
+  // const [error, setError] = useState<boolean>(false)
 
   const onSubmitHandler = async (inputValue: string) => {
     try {
@@ -23,10 +23,10 @@ function Prompt() {
 
       setConversation((oldArray) => [...oldArray, { question: inputValue, answer: result.message }])
       setLoading(false)
-      setError(false)
+      // setError(false)
     } catch (error) {
       console.error(error)
-      setError(true)
+      // setError(true)
     }
   }
 
@@ -34,7 +34,7 @@ function Prompt() {
     <div>
       <ChatFeed conversation={conversation} />
       {loading ? (
-        <div className="container">
+        <div className={styles.container}>
           <Spinner />
         </div>
       ) : (

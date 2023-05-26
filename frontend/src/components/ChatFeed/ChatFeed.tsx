@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown'
-import './ChatFeed.css'
+import styles from './chatFeed.module.scss'
 import { CodeViewer } from '../CodeViewer'
 
 type ConversationProps = {
@@ -14,18 +14,18 @@ type Conversation = {
 function ChatFeed({ conversation }: ConversationProps) {
   return (
     <>
-      <div className="message-container">
+      <div className={styles.container}>
         {conversation.length > 0
           ? conversation
               .slice(0)
               .reverse()
               .map((conversationPart, i) => (
-                <div className="message" key={i}>
-                  <div className="question">
-                    <span className="bold">Q:</span> {conversationPart.question}
+                <div className={styles.message} key={i}>
+                  <div className={styles.question}>
+                    <span className="text-bold">Q:</span> {conversationPart.question}
                   </div>
-                  <div className="answer">
-                    <span className="bold">A:</span>
+                  <div className={styles.answer}>
+                    <span className="text-bold">A:</span>
                     <ReactMarkdown
                       children={conversationPart.answer}
                       components={{
